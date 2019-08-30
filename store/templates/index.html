@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Payment</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{{ url_for('static', filename='narrow-jumbotron.css') }}" rel="stylesheet">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+  </head>
+
+  <body>
+
+    <div class="container">
+      <div class="header clearfix">
+        <nav>
+          <ul class="nav nav-pills float-right">
+            <li class="nav-item">
+              <a class="nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+          </ul>
+        </nav>
+        <h3 class="text-muted">Confirm</h3>
+      </div>
+
+      <div class="jumbotron">
+        <h1 class="display-3">{{account_name}}</h1>
+        <p class="lead">Pay {{payment}} via ACH </p>
+
+
+
+        
+        <button id='linkButton'>Pay via ACH</button>
+        <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
+        <script>
+        var linkHandler = Plaid.create({
+          env: 'sandbox',
+          clientName: 'Certasun',
+          key: '89066d105257beb46bc1873e92467e',
+          product: ['auth'],
+          selectAccount: true,
+          onSuccess: function(public_token, metadata) {
+            // Send the public_token and account ID to your app server.
+            console.log('public_token: ' + public_token);
+            console.log('account ID: ' + metadata.account_id);
+            $.post('/get_access_token', {
+
+             public_token: public_token,
+              account_id: metadata.account_id,})
+              .done(function() {
+                  window.location.replace('/thanks')
+                  })
+              .fail(function() {
+                  alert( "error, payment not processed" );
+                  })
+
+          },
+          onExit: function(err, metadata) {
+            // The user exited the Link flow.
+
+            if (err != null) {
+              print(err)
+              // The user encountered a Plaid API error prior to exiting.
+            }
+          },
+        });
+
+        // Trigger the Link UI
+        document.getElementById('linkButton').onclick = function() {
+          linkHandler.open();
+        };
+        </script>
+      </div>
+
+      <footer class="footer">
+        <p>&copy;Certasun</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+  </body>
+</html>

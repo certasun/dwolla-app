@@ -1,0 +1,26 @@
+typeof Aura === "undefined" && (Aura = {});
+Aura.StaticResourceMap = {"Delete":{"dsfs":1551888210000},"AdminFirstIcon":{"dsfs":1551888210000},"MessageIconPNG":{"dsfs":1551888210000},"EnvelopeConfigurationBaseService":{"dsfs":1551888210000},"Success":{"dsfs":1551888210000},"m_DocuSign_Logo":{"dsfs":1551888210000},"DocuSign":{"dsfs":1551888210000},"SearchIcon":{"dsfs":1551888210000},"m_Reorder":{"dsfs":1551888210000},"RecipientIconPNG":{"dsfs":1551888210000},"AdminLastIcon":{"dsfs":1551888210000},"AdminNextIcon":{"dsfs":1551888210000},"jquery_ui":{"dsfs":1551888210000},"DocumentIcon":{"dsfs":1551888210000},"m_DocuSignJs":{"dsfs":1551888210000},"m_Grab":{"dsfs":1551888210000},"AdminPreviousIcon":{"dsfs":1551888210000},"AdminNextIconOn":{"dsfs":1551888210000},"DocuSignPNG":{"dsfs":1551888210000},"modernizrjs":{"dsfs":1551888210000},"AdminPreviousIconOn":{"dsfs":1551888210000},"DocuSignLoadingLogoPNG":{"dsfs":1551888210000},"angular":{"dsfs":1551888210000},"DocuSignJs":{"dsfs":1551888210000},"fastclick":{"dsfs":1551888210000},"m_Loading":{"dsfs":1551888210000},"m_AddSigner":{"dsfs":1551888210000},"styles":{"dsfs":1551888210000},"Grabber":{"dsfs":1551888210000},"PleaseWait":{"dsfs":1551888210000},"EnvelopecustomfieldIcon":{"dsfs":1551888210000},"DocumentIconPNG":{"dsfs":1551888210000},"AdminFirstIconOn":{"dsfs":1551888210000},"SearchIconPNG":{"dsfs":1551888210000},"GrabberPNG":{"dsfs":1551888210000},"DeletePNG":{"dsfs":1551888210000},"jquery":{"dsfs":1551888210000},"AdminLastIconOn":{"dsfs":1551888210000},"ArrowDropDown":{"dsfs":1551888210000},"SuccessPNG":{"dsfs":1551888210000},"jquery_ui_touch_punch":{"dsfs":1551888210000},"SettingIcon":{"dsfs":1551888210000},"Assets":{"MC4SF":1560353882000},"m_Check1":{"dsfs":1551888210000},"ModalManager":{"dsfs":1551888210000},"MessageIcon":{"dsfs":1551888210000},"m_styles":{"dsfs":1551888210000},"SettingIconPNG":{"dsfs":1551888210000},"RecipientIcon":{"dsfs":1551888210000},"EnvelopecustomfieldIconPNG":{"dsfs":1551888210000},"EnvelopeConfigurationEvents":{"dsfs":1551888210000},"m_Resources":{"dsfs":1551888210000},"DocuSignLoadingLogo":{"dsfs":1551888210000},"UtilJS":{"dsfs":1551888210000},"DocuSignAdminJs":{"dsfs":1551888210000},"jqueryui":{"dsfs":1551888210000}};
+
+(function() { 
+	function initResourceGVP() {
+		 if (!$A.getContext() || !$A.get('$Resource')) { 
+			 $A.addValueProvider('$Resource', 
+			 { 
+				 merge : function() {}, 
+				 isStorable : function() { return false; }, 
+				 get : function(resource) { 
+					 var modStamp, rel, abs, name, ns;
+					 var nsDelim = resource.indexOf('__');
+					 if (nsDelim >= 0) { ns = resource.substring(0, nsDelim); name = resource.substring(nsDelim + 2); } else { name = resource; }
+					 var srMap = Aura.StaticResourceMap[name];
+					 modStamp = srMap && srMap[ns = ns || Object.keys(srMap)[0]];
+					 if (!modStamp) { return; }
+					 rel = $A.get('$SfdcSite.pathPrefix');
+					 abs = $A.get('$Absolute.url');
+					 return [abs || rel || '', '/resource/', modStamp, '/', ns === '' ? name : ns + '__' + name].join('');
+				 } 
+			 }); 
+		 } 
+	 }
+if(Aura.frameworkJsReady)initResourceGVP();else{Aura.beforeFrameworkInit=Aura.beforeFrameworkInit||[],Aura.beforeFrameworkInit.push(initResourceGVP)}
+})();

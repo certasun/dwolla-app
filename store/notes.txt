@@ -1,0 +1,73 @@
+trigger updateProj on Project__c (before insert) {
+    if(trigger.isBefore){
+        if(trigger.isInsert){
+            for(Project__c newItem : trigger.new){
+                if(newItem.Cash_Down_Pmt__c == 0 || newItem.Cash_Down_Pmt__c == null){
+                    newItem.Cash_Down_Pmt_Status__c = 'N/A';
+                }
+                if(newItem.Permit_Pmt__c == 0 || newItem.Permit_Pmt__c == null){
+                    newItem.Cash_Permit_Pmt_Status__c = 'N/A';
+                }
+                if(newItem.Cash_Final_Pmt__c == 0 || newItem.Cash_Final_Pmt__c == null){
+                    newItem.Cash_Final_Pmt_Status__c = 'N/A';
+                }
+                if(newItem.Lender_Down_Pmt__c == 0 || newItem.Lender_Down_Pmt__c == null){
+                    newItem.Lender_Down_Pmt_Status__c = 'N/A';
+                }
+                if(newItem.Lender_Down_Pmt__c == 0 || newItem.Lender_Down_Pmt__c == null){
+                    newItem.Lender_Down_Pmt_Status__c = 'N/A';
+                }
+                if(newItem.Lender_Permit_Pmt__c == 0 || newItem.Lender_Permit_Pmt__c == null){
+                    newItem.Lender_Permit_Pmt_Status__c = 'N/A';
+                }
+                if(newItem.Lender_Final_Pmt__c == 0 || newItem.Lender_Final_Pmt__c == null){
+                    newItem.Lender_Final_Pmt_Status__c = 'N/A';
+                }
+                if(newItem.Installation_Pmt__c == 0 || newItem.Installation_Pmt__c == null){
+                    newItem.Installation_Pmt_Status__c = 'N/A';
+                }
+                if(newItem.Interconnection_Pmt__c == 0 || newItem.Interconnection_Pmt__c == null){
+                    newItem.Interconnection_Pmt_Status__c = 'N/A';
+                }
+                if(newItem.Installation_Pmt__c > 0 && newItem.Installation_Pmt_Status__c == 'Due' && newItem.Installation_Pmt_Became_Due__c == null){
+					newItem.Installation_Pmt_Became_Due__c = date.today();
+                }
+                if(newItem.Interconnection_Pmt__c > 0 && newItem.Interconnection_Pmt_Status__c == 'Due' && newItem.Interconnection_Pmt_Became_Due__c == null){
+					newItem.Interconnection_Pmt_Became_Due__c = date.today();
+                }
+                if(newItem.Part_II_Completed__c <= date.today() && newItem.Part_II_Completed__c != null){
+                    newItem.First_Incentive_Pmt_Status__c = 'Due';
+                }
+                if( newItem.Cash_Down_Pmt_Status__c == 'Received' && newItem.Cash_Down_Pmt__c > 0 && newItem.Cash_Down_Pmt_Received__c == null){
+					newItem.Cash_Down_Pmt_Received__c = date.today();
+                }
+                if(newItem.Cash_Permit_Pmt_Status__c == 'Received' && newItem.Permit_Pmt__c > 0 && newItem.Cash_Permit_Pmt_Received__c == null){
+                    newItem.Cash_Permit_Pmt_Received__c = date.today();
+                }
+                if(newItem.Cash_Final_Pmt_Status__c == 'Received' && newItem.Cash_Final_Pmt__c > 0 && newItem.Cash_Final_Pmt_Received__c == null){
+                    newItem.Cash_Final_Pmt_Received__c = date.today();
+                }
+                if( newItem.Lender_Down_Pmt_Status__c == 'Received' && newItem.Lender_Down_Pmt__c > 0 && newItem.Lender_Down_Pmt_Received__c == null){
+					newItem.Lender_Down_Pmt_Received__c = date.today();
+                }
+                if(newItem.Lender_Permit_Pmt_Status__c == 'Received' && newItem.Lender_Permit_Pmt__c > 0 && newItem.Lender_Permit_Pmt_Received__c == null){
+                    newItem.Lender_Permit_Pmt_Received__c = date.today();
+                }
+                if(newItem.Lender_Final_Pmt_Status__c == 'Received' && newItem.Lender_Final_Pmt__c > 0 && newItem.Lender_Final_Pmt_Received__c == null){
+                    newItem.Lender_Final_Pmt_Received__c = date.today();
+                }
+                if(newItem.Installation_Pmt_Status__c == 'Received' && newItem.Installation_Pmt__c > 0 && newItem.Installation_Pmt_Received__c == null){
+                    newItem.Installation_Pmt_Received__c = date.today();
+                }
+                if(newItem.Interconnection_Pmt_Status__c == 'Received' && newItem.Interconnection_Pmt__c > 0 && newItem.Interconnection_Pmt_Received__c == null){
+                    newItem.Interconnection_Pmt_Received__c = date.today();
+                }
+                if(newItem.Installation_Complete__c != null && newItem.Opportunity__c != null){
+                    Opportunity opp = newItem.Opportunity__c;
+
+                    newItem.Project_Stage__c = 'Installation Completed';
+                }
+            }
+        }
+    }
+}
