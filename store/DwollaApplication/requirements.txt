@@ -38,7 +38,7 @@ pytz==2019.1
 PyYAML==3.13
 requests==2.20.1
 responses==0.10.6
-rsa==3.4.2
+rsa==4.7
 s3transfer==0.2.1
 semantic-version==2.5.0
 simple-salesforce==0.74.2
